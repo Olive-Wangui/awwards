@@ -11,7 +11,7 @@ class Profile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
     
-class tags(models.Model):
+class tag(models.Model):
     name = models.CharField(max_length=50)
     
     def __str__(self):
@@ -31,7 +31,7 @@ class Project(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile')
     date_posted = models.DateTimeField(auto_now_add=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
-    tags = models.ManyToManyField(tags, blank=True)
+    tags = models.ManyToManyField(tag, blank=True)
     likes = models.PositiveIntegerField(default=0)
     
     def __str__(self):
