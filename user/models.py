@@ -17,3 +17,25 @@ class tags(models.Model):
     def __str__(self):
         return self.name
     
+class Location(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.name
+    
+class Project(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
+    image = models.ImageField(upload_to='projects/', null=True)
+    title = models.CharField(max_length=200, null=True)
+    description = models.TextField(max_length=1500, null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile')
+    date_posted = models.DateTimeField(auto_now_add=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
+    tags = models.ManyToManyField(tags, blank=True)
+    likes = models.PositiveIntegerField(default=0)
+    
+    def __str__(self):
+        return self.title
+    
+ 
+    
