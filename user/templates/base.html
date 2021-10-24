@@ -1,4 +1,5 @@
-{% load bootstrap5 $}
+{% load bootstrap5 %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -35,6 +36,46 @@
     {% endblock %}
   </head>
   <body>
+      <nav class="navbar navbar-expanded-lg navbar-light">
+          <div class="container-fluid">
+              <a class="navbar-brand" href="/">
+                <img src="{% static 'images/images.jpeg' %}" style="height: 150px;width: 300px;" alt="image">
+              </a>
+              <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="#navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                      <a class="nav-item nav-link active text-dark" href="#">About <span class="sr-only">(current)</span></a>
+                  </div>
+                  <div class="navbar-nav ml-auto">
+                      <a class="navbar-brand" href="#"></a>
+                      <a class="nav-item nav-link text-dark" href="">Settings</a>
+                      <a class="nav-item nav-link text-dark" href="">Change Password</a>
+                      <a class="nav-item nav-link text-dark" href="">Logout</a>
+                      <a class="nav-item nav-link text-dark" href="">Upload Project</a>
+                      <a class="nav-item nav-link text-dark" href="">Login</a>
+                      <a class="nav-item nav-link text-dark" href="">Register</a>
+                  </div>
+              </div>
+          </div>
+      </nav>
+      <main role="main" class="container-fluid">
+          <br>
+          <div class="row">
+              <div clas="col-md-12">
+                  {% if messages %}
+                  {% for message in messages %}
+                  <div class="alert alert-{{ message.tags }}">
+                      {% message %}
+                  </div>
+                  {% endfor %}
+                  {% endif %}
+              </div>
+          </div>
+      </main>
+
+
     {% block scripts %}
     <!--JQuery-->
     <script
