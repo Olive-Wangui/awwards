@@ -37,5 +37,36 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
- 
+class Comment(models.Model):
+    caption = models.TextField(null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment')
+    date_posted = models.DateTimeField(auto_now_add=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project')
+    
+    def __str__(self):
+        return self.comment
+    
+class Ratings(models.Model):
+    RATING_CHOICES   = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+        (6, '6'),
+        (7, '7'),
+        (8, '8'),
+        (9, '9'),
+        (10, '10'),
+    )
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='ratings', null=True)
+    design_rating = models.PositiveIntegerField(choices=RATING_CHOICES, default=0)
+    usability = models.PositiveIntegerField(choices=RATING_CHOICES, default=0)
+    content_rating = models.PositiveIntegerField(choices=RATING_CHOICES, default=0)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField()
+    
+    def __str__(self):
+        return self.author
     
