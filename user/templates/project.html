@@ -1,11 +1,10 @@
-{% load bootstrap5 %}
-{% load static %}
 {% extends 'django_registration/base.html' %}
-{% block.super %}
+{% load bootstrap5 %}
+{{ block.super }}
 {% block content %}
 {{form.media}}
 <div class="card mx-auto" style="max-width:60rem; padding: 20px;">
-    <form action="{%url 'project'%}" method="post" enctype="multipart/form-data">
+    <form action="{%url 'project' %}" method="post" enctype="multipart/form-data">
         {%csrf_token%}
         {% bootstrap_form form%}
         <input type="submit" class="btn btn-primary btn-sm" value="Post">

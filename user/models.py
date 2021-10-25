@@ -15,6 +15,7 @@ class Profile(models.Model):
     
     def __str__(self):
         return f'{self.user.username} Profile'
+    
     def save_profile(self):
         super().save()
         
@@ -99,30 +100,30 @@ class Project(models.Model):
         return tag.objects.filter(project=self).count()
     
     def design(self):
-        avg_design = list(map(lambda x:x.design_rating, self.ratings.all()))
+        avg_design = list( map(lambda x: x.design_rating, self.ratings.all()))
         return np.mean(avg_design)
     
     def usability(self):
-        avg_usability = list(map(lambda x:x.usability_rating, self.ratings.all()))
+        avg_usability = list( map(lambda x: x.usability_rating, self.ratings.all()))
         return np.mean(avg_usability)
     
     def content(self):
-        avg_content = list(map(lambda x:x.content_rating, self.ratings.all()))
+        avg_content = list( map(lambda x: x.content_rating, self.ratings.all()))
         return np.mean(avg_content)
     
 class Comment(models.Model):
     caption = models.TextField(null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment')
     date_posted = models.DateTimeField(auto_now_add=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project_comment')
     
-    def __str__(self):
-        return self.comment
+    #def __str__(self):
+        #return self.comment
     
     def save_comment(self):
         self.save()
     
-class Ratings(models.Model):
+class Rating(models.Model):
     RATING_CHOICES   = (
         (1, '1'),
         (2, '2'),
@@ -138,23 +139,23 @@ class Ratings(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='ratings', null=True)
     design_rating = models.PositiveIntegerField(choices=RATING_CHOICES, default=0)
-    usability = models.PositiveIntegerField(choices=RATING_CHOICES, default=0)
+    usability_rating = models.PositiveIntegerField(choices=RATING_CHOICES, default=0)
     content_rating = models.PositiveIntegerField(choices=RATING_CHOICES, default=0)
     date_posted = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
     
-    def __str__(self):
-        return self.author
+    #def __str__(self):
+        #return self.author
     
     def save_comment(self):
         self.save()
         
     def get_comment(self, id):
-        comments = Ratings.objects.filter(project_id=id)
+        comments = Rating.objects.filter(project_id=id)
         return comments
     
     @classmethod
     def get_ratings(cls):
-        ratings = Ratings.objects.all()
+        ratings = Rating.objects.all()
         return ratings
     

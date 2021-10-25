@@ -1,6 +1,5 @@
-{%include 'django_registration/base.html'%}
+{% extends 'django_registration/base.html' %}
 {% load static %}
-{% load bootstrap5 %}
 {% load crispy_forms_tags %}
 {% block styles %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -12,7 +11,7 @@
     <div class="col-md-6 mt-2">
       <div class="card">
         <div class="view view-cascade overlay">
-          <img class="card-img-top" src="{{ project.project_image.url }}" alt="{{ project.title }}">
+          <img class="card-img-top" src="{{ project.image.url }}" alt="{{ project.title }}">
           <a>
             <div class="mask rgba-white-slight"></div>
           </a>
@@ -23,7 +22,7 @@
             <div class="circle d-flex text-center">
               <div class="box-circle">
                 <div class="chart font-weight-bold" data-percent="{{ project.design | floatformat  }}"
-                  data-scale-color="#df6c4f" style="color: peachpuff;"></div>
+                  data-scale-color="red" style="color: red;"></div>
                 <h3 class="legend font-weight-bold" style="font-size: 14px;">Design {{ project.design | floatformat  }}
                 </h3>
               </div>
@@ -93,13 +92,13 @@
           <div class="circle d-flex">
             <div class="box-circle">
               <div class="chart font-weight-bold" data-percent="{{ rating.design }}"
-                data-scale-color="#df6c4f" style="color: #df6c4f;"></div>
+                style="color: #df6c4f;"></div>
               <h3 class="legend font-weight-bold" style="font-size: 12px;">Design
                 {{ rating.design }}</h3>
             </div>
             <div class="box-circle">
               <div class="chart font-weight-bold" data-percent="{{ rating.usability }}"
-                data-scale-color="#ecd06f" style="color: #ecd06f;"></div>
+                style="color: brown;"></div>
               <h3 class="legend font-weight-bold" style="font-size: 12px;">Usability
                 {{ rating.usability }}</h3>
             </div>
@@ -112,7 +111,7 @@
           </div>
           <div class="box-circle">
             <div class="chart font-weight-bold" data-percent="{{ project.average_score | floatformat }}"
-              data-scale-color="#1a99aa" style="color: #fff;"></div>
+             style="color: purple;"></div>
             <h3 class="legend font-weight-bold" style="font-size: 12px;">Content
               {{ project.average_score | floatformat }}
             </h3>

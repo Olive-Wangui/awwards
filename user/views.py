@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-
-from user.forms import ProjectForm
 from .models import *
 from .forms import *
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
 
 # Create your views here.
 def home(request):
@@ -104,6 +103,7 @@ def project(request):
             return render(request,'project.html', context)
         
 @login_required(login_url='/accounts/login/')
+@csrf_protect
 def rating(request, pk):
     project = get_object_or_404(Project, pk=pk)
     current_user = request.user
@@ -125,7 +125,7 @@ def rating(request, pk):
             # return redirect('home')
     else:
         form = RatingForm()
-    return render(request, 'rating.html', {'project': project, 'form': form,})
+    return render(request, 'rating.html', {'project': project, 'form': form})
 
  
 

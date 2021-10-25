@@ -22,7 +22,7 @@ class ProjectForm(forms.ModelForm):
         
 class RatingForm(forms.ModelForm):
     class Meta:
-        model = Ratings
+        model = Rating
         design_rating = forms.IntegerField()
         usability_rating = forms.IntegerField()
         content_rating = forms.IntegerField()
