@@ -6,6 +6,9 @@ from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import *
 
 # Create your views here.
 def home(request):
@@ -119,7 +122,7 @@ def rating(request, pk):
             rating.author = current_user
             rating.design_rating = design_rating
             rating.usability_rating = usability_rating
-            rating,content_rating = content_rating
+            rating.content_rating = content_rating
             rating.comment = comment
             rating.save()
             # return redirect('home')
@@ -127,7 +130,11 @@ def rating(request, pk):
         form = RatingForm()
     return render(request, 'rating.html', {'project': project, 'form': form})
 
- 
+class ProfileList(APIView):
+    def get(self, request, format=None)
+    all_profiles = Profile.objects.all()
+    serializers = ProfileSerializer(all_profiles, many=True)
+    return Response(serializers.data)
 
 
-
+    
