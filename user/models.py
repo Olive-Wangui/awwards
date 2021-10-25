@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Profile(models.Model):
@@ -42,11 +43,23 @@ class tag(models.Model):
     def __str__(self):
         return self.name
     
+    def save_tags(self):
+        self.save()
+        
+    def delete(self):
+        self.delete()
+    
 class Location(models.Model):
     name = models.CharField(max_length=50)
     
     def __str__(self):
         return self.name
+    def save_location(self):
+        self.save()
+        
+    def delete_location(self):
+        self.delete()
+        
     
 class Project(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author')
