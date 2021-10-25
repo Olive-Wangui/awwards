@@ -123,6 +123,11 @@ def rating(request, pk):
             rating.comment = comment
             rating.save()
             # return redirect('home')
+    else:
+        form = RatingForm()
+    return render(request, 'rating.html', {'project': project, 'form': form,})
+
+ 
 
 
 

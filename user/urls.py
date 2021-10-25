@@ -7,6 +7,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('logout/', views.logout, name='logout'),
     path('project/', views.project, name='project'),
+    path('new/profile/', views.new_profile, name='profile'),
+    path('rating/<int:pk>/', views.rating, name='rating'),
 ]
 
 if settings.DEBUG:
