@@ -17,6 +17,7 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
     def save_profile(self):
         super().save()
+        
         img = Image.open(self.image.path)
         if img.height > 300 or img.width > 300:
             output_size = (300, 300)
@@ -87,10 +88,12 @@ class Project(models.Model):
     @classmethod
     def find_project(cls, search_term):
         project = Project.objects.filter(title__icontains=search_term)
+        return project
         
     @property
     def number_of_comments(self):
         return Comment.objects.filter(project=self).count()
+    
     @property
     def number_of_tags(self):
         return tag.objects.filter(project=self).count()
@@ -103,7 +106,9 @@ class Project(models.Model):
         avg_usability = list(map(lambda x:x.usability_rating, self.ratings.all()))
         return np.mean(avg_usability)
     
-   
+    def content(self):
+        avg_content = list(map(lambda x:x.content_rating, self.ratings.all()))
+        return np.mean(avg_content)
     
 class Comment(models.Model):
     caption = models.TextField(null=True)
@@ -113,6 +118,9 @@ class Comment(models.Model):
     
     def __str__(self):
         return self.comment
+    
+    def save_comment(self):
+        self.save()
     
 class Ratings(models.Model):
     RATING_CHOICES   = (
@@ -137,4 +145,16 @@ class Ratings(models.Model):
     
     def __str__(self):
         return self.author
+    
+    def save_comment(self):
+        self.save()
+        
+    def get_comment(self, id):
+        comments = Ratings.objects.filter(project_id=id)
+        return comments
+    
+    @classmethod
+    def get_ratings(cls):
+        ratings = Ratings.objects.all()
+        return ratings
     
