@@ -6,6 +6,7 @@ from .models import *
 from .forms import *
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -41,7 +42,7 @@ def project(request):
 @login_required
 def profile(request, profile_id):
     profile = Profile.objects.get(pk=profile_id)
-    Project = Project.objects.filter(profile_id=profile).all()
+    project = Project.objects.filter(profile_id=profile).all()
     
     context = {
         'profile': profile,
@@ -79,6 +80,49 @@ def new_profile(request):
     }
     return render(request, 'profile/profile.html', context)
 
+@login_required
+def project(request):
+    current_user = request.user
+    profiles = Profile.get_profile()
+    for profile in profiles:
+        if profile.user.id == current_user.id:
+            if request.method == 'POST':
+                form = ProjectForm(request.POST,request.FILES)
+                if form.is_valid():
+                    project = form.save(commit=False)
+                    project.author = current_user
+                    project.profile = profile
+                    project.save()
+                    return redirect('home')
+            else:
+                form = ProjectForm()
+                
+                context = {
+                    'user':current_user,
+                    'form':form
+                }
+            return render(request,'project.html', context)
+        
+@login_required
+def rating(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    current_user = request.user
+    if request.method == 'POST':
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            design_rating = form.cleaned_data["design_rating"]
+            usability_rating = form.cleaned_data["usability_rating"]
+            content_rating = form.cleaned_data["content_rating"]
+            comment = form.cleaned_data["comment"]
+            rating = form.save(commit=False)
+            rating.project = project
+            rating.author = current_user
+            rating.design_rating = design_rating
+            rating.usability_rating = usability_rating
+            rating,content_rating = content_rating
+            rating.comment = comment
+            rating.save()
+            # return redirect('home')
 
 
 

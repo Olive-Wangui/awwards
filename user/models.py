@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+import numpy as np
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
@@ -74,6 +75,35 @@ class Project(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def save_image(self):
+        self.save()
+        
+    @classmethod
+    def get_projects(cls):
+        projects = Project.objects.all()
+        return projects
+    
+    @classmethod
+    def find_project(cls, search_term):
+        project = Project.objects.filter(title__icontains=search_term)
+        
+    @property
+    def number_of_comments(self):
+        return Comment.objects.filter(project=self).count()
+    @property
+    def number_of_tags(self):
+        return tag.objects.filter(project=self).count()
+    
+    def design(self):
+        avg_design = list(map(lambda x:x.design_rating, self.ratings.all()))
+        return np.mean(avg_design)
+    
+    def usability(self):
+        avg_usability = list(map(lambda x:x.usability_rating, self.ratings.all()))
+        return np.mean(avg_usability)
+    
+   
     
 class Comment(models.Model):
     caption = models.TextField(null=True)
