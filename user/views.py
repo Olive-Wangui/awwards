@@ -16,7 +16,7 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def project(request):
     current_user = request.user
     profiles = Profile.get_profile()
@@ -39,7 +39,7 @@ def project(request):
             }
     return render(request, 'project.html', context)
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def profile(request, profile_id):
     profile = Profile.objects.get(pk=profile_id)
     project = Project.objects.filter(profile_id=profile).all()
@@ -55,7 +55,7 @@ def logout(request):
     django_logout(request)
     return  HttpResponseRedirect('/')
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def new_profile(request):
     project = Project.objects.filter(author=request.user).order_by('-date_posted')
     if request.method == 'POST':
@@ -80,7 +80,7 @@ def new_profile(request):
     }
     return render(request, 'profile/profile.html', context)
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def project(request):
     current_user = request.user
     profiles = Profile.get_profile()
@@ -103,7 +103,7 @@ def project(request):
                 }
             return render(request,'project.html', context)
         
-@login_required
+@login_required(login_url='/accounts/login/')
 def rating(request, pk):
     project = get_object_or_404(Project, pk=pk)
     current_user = request.user
