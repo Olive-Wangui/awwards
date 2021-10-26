@@ -150,7 +150,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-LOGIN_REDIRECT = '/'
+LOGIN_REDIRECT = 'accounts/profile/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Default primary key field type
