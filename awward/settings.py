@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import django_on_heroku
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -53,6 +54,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'whitenoise.middleware.whitenoise.middleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -143,6 +145,13 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
 LOGIN_REDIRECT = '/'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -158,3 +167,6 @@ EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Configure Django App for Heroku.
+django_on_heroku.settings(locals())

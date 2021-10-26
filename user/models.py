@@ -73,7 +73,6 @@ class Project(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
     tags = models.ManyToManyField(tag, blank=True)
-    likes = models.PositiveIntegerField(default=0)
     
     def __str__(self):
         return self.title

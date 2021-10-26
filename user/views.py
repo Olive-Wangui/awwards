@@ -132,6 +132,19 @@ def rating(request, pk):
         form = RatingForm()
     return render(request, 'rating.html', {'project': project, 'form': form})
 
+def search_results(request):
+
+    if 'profile.user.id' in request.GET and request.GET["profile"]:
+        search_term = request.GET.get("profile")
+        searched_projects = Project.search_by_user(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',{"message":message,"profile": searched_projects})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})
+
 class ProfileList(APIView):
     def get(self, request, format=None):
         all_profiles = Profile.objects.all()
