@@ -160,7 +160,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Email configurations remember to install python-decouple
 EMAIL_USE_TLS = config('EMAIL_USE_TLS')
 EMAIL_HOST = config('EMAIL_HOST')
