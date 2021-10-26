@@ -1,0 +1,34 @@
+{%extends 'django_registration/base.html'%}
+{% block content %}
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<div class="container" style="font-size:14px; color:crimson; font-family: 'Raleway', sans-serif; margin-top:50px;">
+
+  <div class="row">
+    {% if project.title%}
+    <h2>Found {{ projects | length }} name {{message}}</h2>
+    {% else %}
+    <h2> There is no project by this name {{message}}</h2>
+    {% endif %}
+
+  </div>
+
+  <div class="row" style="font-family: 'Montserrat', sans-serif;">
+
+    {% for project in projects %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card border-0 transform-on-hover">
+        <a class="lightbox" href="">
+          <a href="{%url 'project' %}"><img class="img-responsive" src="{{ project.image.url }}" style="width:50px; border-radius:50%"></a>
+        </a>
+        <div class="card-body">
+          <a href="">
+            <h4>{{project.title}}</h4>
+          </a>
+          <p class="text-muted card-text">{{ project.description }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

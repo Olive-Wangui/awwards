@@ -60,6 +60,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="col-md-1" style="padding-top:10px;">
+            <form class="form-inline my-2 my-lg-0" role="search" action="{% url 'search_results' %}">
+                <input type="text" class="form-control my-2 my-sm-0 search-input" name="search" placeholder="Search.." id="search">
+            </form>
+        </div>
           <div class="navbar-nav ml-auto">
             <a class="navbar-brand" href="#"></a>
             {% if user.is_authenticated %}
