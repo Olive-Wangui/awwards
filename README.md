@@ -27,10 +27,10 @@ This is a Django application that allows users to post a project he/she has crea
 
 <b> install and activate virtual
 - python-3.9
-source virtual/bin/activate
+- source virtual/bin/activate
 
 <b> run the application
-python3 manage.py runserver
+<li>python3 manage.py runserver
 
 ## TECHNOLOGIES USED
 <li> python 3.9
